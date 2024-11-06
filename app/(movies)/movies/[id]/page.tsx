@@ -1,13 +1,17 @@
-"use client";
+import { API_URL } from "../../../(home)/page";
 
-import { useParams, useSearchParams } from "next/navigation";
+async function getMovie(id: string) {
+  const response = await fetch(`${API_URL}/${id}`);
+  return response.json();
+}
 
-export default function MovieDetail() {
-  const params = useParams();
-  const searchParams = useSearchParams();
-  return (
-    <h1>
-      Movie ({params.id}/{searchParams.get("region")})
-    </h1>
-  );
+async function getVideos(id: string) {
+  const response = await fetch(`${API_URL}/${id}/videos`);
+  return response.json();
+}
+
+export default async function MovieDetail({ params }) {
+  const { id } = await params;
+  const [movie, videos] = await Promise.all([getMovie(id), getVideos(id)]);
+  return <h1>{movie.title}</h1>;
 }
