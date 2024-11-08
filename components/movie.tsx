@@ -13,7 +13,9 @@ export default function Movie({ movie }) {
         alt={movie.title}
         onClick={() => router.push(`/movies/${movie.id}`)}
       />
-      <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+      <Link prefetch href={`/movies/${movie.id}`}>
+        {movie.title}
+      </Link>
     </div>
   );
 }
